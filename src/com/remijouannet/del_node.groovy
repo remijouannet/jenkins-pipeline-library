@@ -1,3 +1,5 @@
+package com.remijouannet.del_node
+
 import jenkins.model.*
 import hudson.model.*
 import hudson.slaves.*
