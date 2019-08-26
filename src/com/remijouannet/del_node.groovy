@@ -38,6 +38,7 @@ def deleteNode(String name){
     Jenkins.instance.removeNode(Jenkins.instance.getNode(name))
 }
 
+def main2(){
 def env = binding.build.environment
 def job_name = env.job_name
 
@@ -60,3 +61,4 @@ if (instance_id != null) {
 }
 
 println('end')
+}
