@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-package com.remijouannet.add_node
+package com.remijouannet
 
 import jenkins.model.*
 import hudson.model.*

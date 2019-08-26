@@ -1,4 +1,6 @@
-package com.remijouannet.del_node
+#!/usr/bin/env groovy
+
+package com.remijouannet
 
 import jenkins.model.*
 import hudson.model.*
