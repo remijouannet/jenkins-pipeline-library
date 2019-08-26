@@ -1,3 +1,5 @@
+#!/usr/bin/env groovy
+
 package com.remijouannet.add_node
 
 import jenkins.model.*
@@ -167,3 +169,5 @@ def main3(){
         }
     }
 }
+
+return this;
