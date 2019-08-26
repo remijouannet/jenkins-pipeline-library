@@ -1,7 +1,8 @@
 #!/usr/bin/env groovy
 
 def call() {
-    def a = add_node.get_current_instance_id()
+    def b = new com.remijouannet.add_node()
+    def a = b.get_current_instance_id()
     println(a)
     echo "test aa"
 }
