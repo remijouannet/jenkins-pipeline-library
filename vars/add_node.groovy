@@ -4,6 +4,6 @@ def call(body) {
     def b = new com.remijouannet.manageNode()
     def a = b.get_current_instance_id()
     println(a)
-    println(body.toString())
+    println(body.get('d').toString())
     echo "test aa"
 }
