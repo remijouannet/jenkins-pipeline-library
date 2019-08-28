@@ -9,6 +9,7 @@ import com.amazonaws.waiters.WaiterTimedOutException
 
 def call(body) {
     def manage = new com.remijouannet.manageNode()
+
     def instance_type = body.get('instance_type').toString()
     def disk_size = body.get('disk_size').toInteger()
     def job_name = body.get('job_name').toString()
@@ -19,9 +20,9 @@ def call(body) {
     AmazonEC2 ec2 = manage.ec2Client(ak, sk, "fcu.eu-west-2.outscale.com", "eu-west-2")
     
     def ami = manage.find_ami(ec2)
-    def subnet = manage.get_current_subnet(ec2, get_current_instance_id())
-    def zone = manage.get_current_zone(ec2, get_current_instance_id())
-    def keyname = manage.get_current_keyname(ec2, get_current_instance_id())
+    def subnet = manage.get_current_subnet(ec2, mange.get_current_instance_id())
+    def zone = manage.get_current_zone(ec2, manage.get_current_instance_id())
+    def keyname = manage.get_current_keyname(ec2, manage.get_current_instance_id())
     
     println("ami : " + ami)
     println("subnet : " + subnet)
