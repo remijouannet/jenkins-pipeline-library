@@ -3,9 +3,6 @@ import com.amazonaws.auth.*
 import com.amazonaws.client.builder.*
 import com.amazonaws.services.ec2.model.*
 import com.amazonaws.services.ec2.*
-import com.amazonaws.waiters.Waiter
-import com.amazonaws.waiters.WaiterParameters
-import com.amazonaws.waiters.WaiterTimedOutException
 
 def call(body) {
     def manage = new com.remijouannet.manageNode()
@@ -36,12 +33,12 @@ def call(body) {
             def slave = manage.run_instance(ec2, ami, subnet, instance_type, prefix_name, zone, keyname, job_name, 10)
             println(slave.instanceId.toString())
             println(slave.privateIpAddress.toString())
-            createNode(job_name, slave.instanceId.toString(), slave.privateIpAddress.toString())
+            manage.createNode(job_name, slave.instanceId.toString(), slave.privateIpAddress.toString())
         }else{
             def slave = manage.run_instance(ec2, ami, subnet, instance_type, prefix_name, zone, keyname, job_name, disk_size)
             println(slave.instanceId.toString())
             println(slave.privateIpAddress.toString())
-            createNode(job_name, slave.instanceId.toString(), slave.privateIpAddress.toString())
+            manage.createNode(job_name, slave.instanceId.toString(), slave.privateIpAddress.toString())
         }
     }
 

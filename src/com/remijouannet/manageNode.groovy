@@ -150,59 +150,5 @@ def ec2Client(String ak, String sk, String endpoint, String region) {
 
     return ec2
 }
-def main2(){
-    def env = binding.build.environment
-    def job_name = env.job_name
-    
-    print 'authentification ... \n'
-    AmazonEC2 ec2 = ec2Client(env.AWS_ACCESS_KEY, env.AWS_SECRET_KEY, "fcu.eu-west-2.outscale.com", "eu-west-2")
-
-    def instance_id = check_if_instance_exist(ec2, job_name)
-    println(instance_id)
-    if (instance_id != null) {
-        println("slave exists")
-        terminate_instance(ec2, instance_id)
-        deleteNode(instance_id)
-    } else {
-        println("slave is not exists")
-    }
-    
-    println('end')
-}
-def main3(){
-    def env = binding.build.environment
-    def instance_type = env.instance_type
-    def disk_size = env.disk_size.toInteger()
-    def job_name = env.job_name
-    def prefix_name = 'euw2-hy-jenkins-slave-'
-    
-    AmazonEC2 ec2 = ec2Client(env.AWS_ACCESS_KEY, env.AWS_SECRET_KEY, "fcu.eu-west-2.outscale.com", "eu-west-2")
-    
-    def ami = find_ami(ec2)
-    def subnet = get_current_subnet(ec2, get_current_instance_id())
-    def zone = get_current_zone(ec2, get_current_instance_id())
-    def keyname = get_current_keyname(ec2, get_current_instance_id())
-    
-    println("ami : " + ami)
-    println("subnet : " + subnet)
-    println("zone : " + zone)
-    println("job_name : " + job_name)
-    
-    if (check_if_instance_exist(ec2, job_name)) {
-        println("slave already exists")
-    } else {
-        if (disk_size < 10){
-            def slave = run_instance(ec2, ami, subnet, instance_type, prefix_name, zone, keyname, job_name, 10)
-            println(slave.instanceId.toString())
-            println(slave.privateIpAddress.toString())
-            createNode(job_name, slave.instanceId.toString(), slave.privateIpAddress.toString())
-        }else{
-            def slave = run_instance(ec2, ami, subnet, instance_type, prefix_name, zone, keyname, job_name, disk_size)
-            println(slave.instanceId.toString())
-            println(slave.privateIpAddress.toString())
-            createNode(job_name, slave.instanceId.toString(), slave.privateIpAddress.toString())
-        }
-    }
-}
 
 return this;
