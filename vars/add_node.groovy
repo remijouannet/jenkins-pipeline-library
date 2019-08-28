@@ -26,7 +26,7 @@ def call(body) {
     println("zone : " + zone)
     println("job_name : " + job_name)
     
-    if (manage.check_if_instance_exist(ec2, job_name)) {
+    if (manage.check_if_instance_exist(ec2, job_name) != null) {
         println("slave already exists")
     } else {
         if (disk_size < 10){

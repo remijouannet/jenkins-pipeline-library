@@ -59,9 +59,9 @@ def check_if_instance_exist(AmazonEC2 ec2, String job_name){
             .withFilters(new Filter("instance-state-name", ["running"]))
     DescribeInstancesResult res = ec2.describeInstances(req)
     if (res.reservations.size() != 0){
-        return true
+        return res.reservations[0].instances[0].instanceId.toString()
     } else {
-        return false
+        return null
     }
 }
 
