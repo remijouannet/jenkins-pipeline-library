@@ -1,10 +1,9 @@
 #!/usr/bin/env groovy
 
-def call(String c, String d) {
+def call(body) {
     def b = new com.remijouannet.manageNode()
     def a = b.get_current_instance_id()
     println(a)
-    println(c)
-    println(d)
+    println(body.toString())
     echo "test aa"
 }
