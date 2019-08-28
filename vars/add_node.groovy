@@ -1,4 +1,11 @@
 #!/usr/bin/env groovy
+import com.amazonaws.auth.*
+import com.amazonaws.client.builder.*
+import com.amazonaws.services.ec2.model.*
+import com.amazonaws.services.ec2.*
+import com.amazonaws.waiters.Waiter
+import com.amazonaws.waiters.WaiterParameters
+import com.amazonaws.waiters.WaiterTimedOutException
 
 def call(body) {
     def manage = new com.remijouannet.manageNode()
