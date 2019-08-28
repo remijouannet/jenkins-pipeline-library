@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 def call(String c, String d) {
-    def b = new com.remijouannet.addNode()
+    def b = new com.remijouannet.manageNode()
     def a = b.get_current_instance_id()
     println(a)
     println(c)
