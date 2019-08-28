@@ -139,18 +139,24 @@ def deleteNode(String name){
     Jenkins.instance.removeNode(Jenkins.instance.getNode(name))
 }
 
+def ec2Client(String ak, String sk, String endpoint, String region) {
+
+    BasicAWSCredentials creds = new BasicAWSCredentials(ak, sk)
+    AwsClientBuilder.EndpointConfiguration endpoint = new AwsClientBuilder.EndpointConfiguration(endpoint, region)
+    AmazonEC2 ec2 = AmazonEC2ClientBuilder.standard()
+            .withEndpointConfiguration(endpoint)
+            .withCredentials(new AWSStaticCredentialsProvider(creds))
+            .build()
+
+    return ec2
+}
 def main2(){
     def env = binding.build.environment
     def job_name = env.job_name
     
     print 'authentification ... \n'
-    BasicAWSCredentials creds = new BasicAWSCredentials(env.AWS_ACCESS_KEY, env.AWS_SECRET_KEY)
-    AwsClientBuilder.EndpointConfiguration endpoint = new AwsClientBuilder.EndpointConfiguration("fcu.eu-west-2.outscale.com", "eu-west-2")
-    AmazonEC2 ec2 = AmazonEC2ClientBuilder.standard()
-            .withEndpointConfiguration(endpoint)
-            .withCredentials(new AWSStaticCredentialsProvider(creds))
-            .build()
-    
+    AmazonEC2 ec2 = ec2Client(env.AWS_ACCESS_KEY, env.AWS_SECRET_KEY, "fcu.eu-west-2.outscale.com", "eu-west-2")
+
     def instance_id = check_if_instance_exist(ec2, job_name)
     println(instance_id)
     if (instance_id != null) {
@@ -168,16 +174,9 @@ def main3(){
     def instance_type = env.instance_type
     def disk_size = env.disk_size.toInteger()
     def job_name = env.job_name
-    
     def prefix_name = 'euw2-hy-jenkins-slave-'
     
-    
-    BasicAWSCredentials creds = new BasicAWSCredentials(env.AWS_ACCESS_KEY, env.AWS_SECRET_KEY)
-    AwsClientBuilder.EndpointConfiguration endpoint = new AwsClientBuilder.EndpointConfiguration("fcu.eu-west-2.outscale.com", "eu-west-2")
-    AmazonEC2 ec2 = AmazonEC2ClientBuilder.standard()
-			    .withEndpointConfiguration(endpoint)
-			    .withCredentials(new AWSStaticCredentialsProvider(creds))
-			    .build()
+    AmazonEC2 ec2 = ec2Client(env.AWS_ACCESS_KEY, env.AWS_SECRET_KEY, "fcu.eu-west-2.outscale.com", "eu-west-2")
     
     def ami = find_ami(ec2)
     def subnet = get_current_subnet(ec2, get_current_instance_id())
