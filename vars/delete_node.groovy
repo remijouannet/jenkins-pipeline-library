@@ -10,7 +10,6 @@ def call(body) {
     def job_name = body.get('job_name').toString()
     def ak = body.get('ak').toString()
     def sk = body.get('sk').toString()
-    def prefix_name = 'euw2-hy-jenkins-slave-'
 
     AmazonEC2 ec2 = manage.ec2Client(ak, sk, "fcu.eu-west-2.outscale.com", "eu-west-2")
     
