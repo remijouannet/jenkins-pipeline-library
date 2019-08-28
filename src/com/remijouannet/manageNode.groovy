@@ -142,9 +142,9 @@ def deleteNode(String name){
 def ec2Client(String ak, String sk, String endpoint, String region) {
 
     BasicAWSCredentials creds = new BasicAWSCredentials(ak, sk)
-    AwsClientBuilder.EndpointConfiguration endpoint = new AwsClientBuilder.EndpointConfiguration(endpoint, region)
+    AwsClientBuilder.EndpointConfiguration endpointconf = new AwsClientBuilder.EndpointConfiguration(endpoint, region)
     AmazonEC2 ec2 = AmazonEC2ClientBuilder.standard()
-            .withEndpointConfiguration(endpoint)
+            .withEndpointConfiguration(endpointconf)
             .withCredentials(new AWSStaticCredentialsProvider(creds))
             .build()
 
