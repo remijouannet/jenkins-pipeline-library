@@ -20,7 +20,7 @@ def call(body) {
     AmazonEC2 ec2 = manage.ec2Client(ak, sk, "fcu.eu-west-2.outscale.com", "eu-west-2")
     
     def ami = manage.find_ami(ec2)
-    def subnet = manage.get_current_subnet(ec2, mange.get_current_instance_id())
+    def subnet = manage.get_current_subnet(ec2, manage.get_current_instance_id())
     def zone = manage.get_current_zone(ec2, manage.get_current_instance_id())
     def keyname = manage.get_current_keyname(ec2, manage.get_current_instance_id())
     
