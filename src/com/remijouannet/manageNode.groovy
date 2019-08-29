@@ -132,7 +132,10 @@ def ec2Client(String ak, String sk, String endpoint, String region) {
 
     BasicAWSCredentials creds = new BasicAWSCredentials(ak, sk)
     AwsClientBuilder.EndpointConfiguration endpointconf = new AwsClientBuilder.EndpointConfiguration(endpoint, region)
+    ClientConfiguration clientConfiguration = new ClientConfiguration()
+    clientConfiguration.setUseThrottleRetries(true)
     AmazonEC2 ec2 = AmazonEC2ClientBuilder.standard()
+            .withClientConfiguration(clientConfiguration)
             .withEndpointConfiguration(endpointconf)
             .withCredentials(new AWSStaticCredentialsProvider(creds))
             .build()
