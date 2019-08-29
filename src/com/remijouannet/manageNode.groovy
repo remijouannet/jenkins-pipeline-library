@@ -69,19 +69,9 @@ def run_instance(AmazonEC2 ec2, String ami, String subnet, String instance_type,
     BlockDeviceMapping deviceMapping = new BlockDeviceMapping()
             .withDeviceName("/dev/xvdb")
             .withEbs(new EbsBlockDevice()
-                    .withVolumeType("standard")
+                    .withVolumeType("gp2")
                     .withVolumeSize(disk_size)
                     .withDeleteOnTermination(true))
-
-    def userdata = '''#!/bin/bash -x
-hostname_tag=$(curl http://169.254.169.254/latest/meta-data/tags/Name)
-hostnamectl set-hostname $hostname_tag
-mkfs.xfs -f /dev/xvdb
-mkdir -p /var/lib/docker
-mount /dev/xvdb /var/lib/docker
-systemctl start docker
-'''
-    String userdata_encoded = userdata.bytes.encodeBase64().toString()
 
     RunInstancesRequest instanceRequest = new RunInstancesRequest()
             .withInstanceType(instance_type)
@@ -91,7 +81,6 @@ systemctl start docker
             .withInstanceInitiatedShutdownBehavior(ShutdownBehavior.Terminate)
             .withSubnetId(subnet)
             .withKeyName(keyname)
-            .withUserData(userdata_encoded)
             .withMinCount(1)
             .withMaxCount(1)
 
