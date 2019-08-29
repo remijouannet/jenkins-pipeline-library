@@ -11,6 +11,8 @@ import hudson.model.Node.*
 import java.util.ArrayList
 import hudson.slaves.EnvironmentVariablesNodeProperty.Entry
 import org.jenkinsci.plugins.scriptsecurity.scripts.*
+import com.amazonaws.ClientConfiguration
+import com.amazonaws.retry.*
 import com.amazonaws.auth.*
 import com.amazonaws.client.builder.*
 import com.amazonaws.services.ec2.model.*
