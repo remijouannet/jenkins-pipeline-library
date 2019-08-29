@@ -134,6 +134,7 @@ def ec2Client(String ak, String sk, String endpoint, String region) {
     AwsClientBuilder.EndpointConfiguration endpointconf = new AwsClientBuilder.EndpointConfiguration(endpoint, region)
     ClientConfiguration clientConfiguration = new ClientConfiguration()
     clientConfiguration.setUseThrottleRetries(true)
+    clientConfiguration.setRetryPolicy(new PredefinedRetryPolicies().getDefaultRetryPolicy())
     AmazonEC2 ec2 = AmazonEC2ClientBuilder.standard()
             .withClientConfiguration(clientConfiguration)
             .withEndpointConfiguration(endpointconf)
