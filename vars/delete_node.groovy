@@ -20,7 +20,7 @@ def call(body) {
     def instance = manage.checkIfInstanceExist(ec2, job_name)
 
     if (instance != null) {
-        echo "delete_node: Node already exists ->" + instance
+        echo "delete_node: Node already exists -> " + instance
 
         manage.terminateInstance(ec2, instance)
         manage.deleteNode(instance)
