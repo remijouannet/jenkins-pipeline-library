@@ -10,14 +10,16 @@ def call(body) {
     def job_name = body.get('job_name').toString()
     def ak = body.get('ak').toString()
     def sk = body.get('sk').toString()
+    def fcu_region = body.get('fcu_region', 'eu-west-2').toString()
+    def fcu_endpoint = body.get('fcu_endpoint', "fcu.eu-west-2.outscale.com").toString()
 
-    AmazonEC2 ec2 = manage.ec2Client(ak, sk, "fcu.eu-west-2.outscale.com", "eu-west-2")
+    AmazonEC2 ec2 = manage.ec2Client(ak, sk, fcu_endpoint, fcu_region)
     
-    def instance_id = manage.check_if_instance_exist(ec2, job_name)
+    def instance_id = manage.checkIfInstanceExist(ec2, job_name)
     println(instance_id)
     if (instance_id != null) {
         println("slave exists")
-        manage.terminate_instance(ec2, instance_id)
+        manage.terminateInstance(ec2, instance_id)
         manage.deleteNode(instance_id)
     } else {
         println("slave is not exists")

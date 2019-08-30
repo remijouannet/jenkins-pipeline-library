@@ -21,30 +21,30 @@ import com.amazonaws.waiters.Waiter
 import com.amazonaws.waiters.WaiterParameters
 import com.amazonaws.waiters.WaiterTimedOutException
 
-def get_current_instance_id(){
+def getCurrentInstanceId(){
     def get = new URL("http://169.254.169.254/latest/meta-data/instance-id").getText();
     return get
 }
 
-def get_current_subnet(AmazonEC2 ec2, String id){
+def getCurrentSubnet(AmazonEC2 ec2, String id){
     DescribeInstancesRequest req = new DescribeInstancesRequest().withInstanceIds([id])
     DescribeInstancesResult res = ec2.describeInstances(req)
     return res.reservations[0].instances[0].subnetId.toString()
 }
 
-def get_current_zone(AmazonEC2 ec2, String id){
+def getCurrentZone(AmazonEC2 ec2, String id){
     DescribeInstancesRequest req = new DescribeInstancesRequest().withInstanceIds([id])
     DescribeInstancesResult res = ec2.describeInstances(req)
     return res.reservations[0].instances[0].placement.availabilityZone.toString()
 }
 
-def get_current_keyname(AmazonEC2 ec2, String id){
+def getCurrentKeyname(AmazonEC2 ec2, String id){
     DescribeInstancesRequest req = new DescribeInstancesRequest().withInstanceIds([id])
     DescribeInstancesResult res = ec2.describeInstances(req)
     return res.reservations[0].instances[0].keyName.toString()
 }
 
-def find_ami(AmazonEC2 ec2){
+def findAmi(AmazonEC2 ec2){
     DescribeImagesRequest req = new DescribeImagesRequest()
             .withOwners("self")
             .withFilters(new Filter()
@@ -55,7 +55,7 @@ def find_ami(AmazonEC2 ec2){
     return res.images[0].imageId.toString()
 }
 
-def check_if_instance_exist(AmazonEC2 ec2, String job_name){
+def checkIfInstanceExist(AmazonEC2 ec2, String job_name){
     DescribeInstancesRequest req = new DescribeInstancesRequest()
             .withFilters(new Filter("tag:job_name", [job_name]))
             .withFilters(new Filter("instance-state-name", ["running"]))
@@ -67,7 +67,7 @@ def check_if_instance_exist(AmazonEC2 ec2, String job_name){
     }
 }
 
-def run_instance(AmazonEC2 ec2, String ami, String subnet, String instance_type, String prefix_name, String zone, String keyname, String job_name, Integer disk_size){
+def runInstance(AmazonEC2 ec2, String ami, String subnet, String instance_type, String prefix_name, String zone, String keyname, String job_name, Integer disk_size){
     BlockDeviceMapping deviceMapping = new BlockDeviceMapping()
             .withDeviceName("/dev/xvdb")
             .withEbs(new EbsBlockDevice()
@@ -118,7 +118,7 @@ def createNode(String job_name, String name,String host){
     Jenkins.instance.addNode(dumb1)
 }
 
-def terminate_instance(AmazonEC2 ec2, String instance_id){
+def terminateInstance(AmazonEC2 ec2, String instance_id){
     StopInstancesRequest stopInstancesRequest = new StopInstancesRequest()
             .withInstanceIds([instance_id])
             .withForce(true)
