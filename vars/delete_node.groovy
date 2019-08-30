@@ -17,13 +17,13 @@ def call(body) {
 
     AmazonEC2 ec2 = manage.ec2Client(ak, sk, fcu_endpoint, fcu_region)
     
-    def instanceid = manage.checkIfInstanceExist(ec2, job_name)
+    def instance = manage.checkIfInstanceExist(ec2, job_name)
 
-    if (instance_id != null) {
-        echo "delete_node: Node already exists ->" + instanceid
+    if (instance != null) {
+        echo "delete_node: Node already exists ->" + instance
 
-        manage.terminateInstance(ec2, instanceid)
-        manage.deleteNode(instanceid)
+        manage.terminateInstance(ec2, instance)
+        manage.deleteNode(instance)
     } else {
         echo "delete_node: Node doesn't exist"
     }
