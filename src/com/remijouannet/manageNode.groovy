@@ -49,7 +49,7 @@ def findAmi(AmazonEC2 ec2){
             .withOwners("self")
             .withFilters(new Filter()
                     .withName("name")
-                    .withValues(["jenkins-slave-centos7"]))
+                    .withValues(["jenkins-node-centos7"]))
 
     DescribeImagesResult res = ec2.describeImages(req)
     return res.images[0].imageId.toString()
