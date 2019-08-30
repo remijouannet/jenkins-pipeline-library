@@ -24,6 +24,4 @@ def call(body) {
     } else {
         println("slave is not exists")
     }
-    
-    println('end')
 }

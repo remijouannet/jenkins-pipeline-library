@@ -19,9 +19,10 @@ def call(body) {
     AmazonEC2 ec2 = manage.ec2Client(ak, sk, fcu_endpoint, fcu_region)
     
     def ami = manage.findAmi(ec2)
-    def subnet = manage.getCurrentSubnet(ec2, manage.getCurrentInstanceId())
-    def zone = manage.getCurrentZone(ec2, manage.getCurrentInstanceId())
-    def keyname = manage.getCurrentKeyname(ec2, manage.getCurrentInstanceId())
+    def instanceid = manage.getCurrentInstanceId()
+    def subnet = manage.getCurrentSubnet(ec2, instanceid)
+    def zone = manage.getCurrentZone(ec2, instanceid)
+    def keyname = manage.getCurrentKeyname(ec2, instanceid)
     
     println("ami : " + ami)
     println("subnet : " + subnet)
@@ -32,16 +33,14 @@ def call(body) {
         println("slave already exists")
     } else {
         if (disk_size < 10){
-            def slave = manage.runInstance(ec2, ami, subnet, instance_type, prefix_name, zone, keyname, job_name, 10)
-            println(slave.instanceId.toString())
-            println(slave.privateIpAddress.toString())
-            manage.createNode(job_name, slave.instanceId.toString(), slave.privateIpAddress.toString())
-        }else{
-            def slave = manage.runInstance(ec2, ami, subnet, instance_type, prefix_name, zone, keyname, job_name, disk_size)
-            println(slave.instanceId.toString())
-            println(slave.privateIpAddress.toString())
-            manage.createNode(job_name, slave.instanceId.toString(), slave.privateIpAddress.toString())
+            disk_size = 10
         }
+        def node = manage.runInstance(ec2, ami, subnet, instance_type, prefix_name, zone, keyname, job_name, disk_size)
+
+        println(node.instanceId.toString())
+        println(node.privateIpAddress.toString())
+
+        manage.createNode(job_name, node.instanceId.toString(), node.privateIpAddress.toString())
     }
 
 }
