@@ -14,7 +14,7 @@ def call(body) {
     def sk = body.get('sk').toString()
     def fcu_region = body.get('fcu_region', 'eu-west-2').toString()
     def fcu_endpoint = body.get('fcu_endpoint', "fcu.eu-west-2.outscale.com").toString()
-    def prefix_name = body.get('prefix_name', 'euw2-hy-jenkins-slave-').toString()
+    def prefix_name = body.get('prefix_name', 'jenkins-node-').toString()
 
     echo "add_node: Authentification"
 
