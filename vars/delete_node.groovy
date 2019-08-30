@@ -13,15 +13,18 @@ def call(body) {
     def fcu_region = body.get('fcu_region', 'eu-west-2').toString()
     def fcu_endpoint = body.get('fcu_endpoint', "fcu.eu-west-2.outscale.com").toString()
 
+    echo "add_node: Authentification"
+
     AmazonEC2 ec2 = manage.ec2Client(ak, sk, fcu_endpoint, fcu_region)
     
-    def instance_id = manage.checkIfInstanceExist(ec2, job_name)
-    println(instance_id)
+    def instanceid = manage.checkIfInstanceExist(ec2, job_name)
+
     if (instance_id != null) {
-        println("slave exists")
-        manage.terminateInstance(ec2, instance_id)
-        manage.deleteNode(instance_id)
+        echo "delete_node: Node already exists ->" + instanceid
+
+        manage.terminateInstance(ec2, instanceid)
+        manage.deleteNode(instanceid)
     } else {
-        println("slave is not exists")
+        echo "delete_node: Node doesn't exist"
     }
 }
