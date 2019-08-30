@@ -10,7 +10,7 @@
 
 # Behavior
 ## add_node
-It will search a AMI named 'jenkins-node-centos7' and run it with a second disk,
+It will search an AMI named 'jenkins-node-centos7' and run it with a second disk,
 the instance will be run in the same VPC subnet of your jenkins master
 
 ## delete_node
@@ -27,7 +27,7 @@ it will delete the node by searching the tag job_name
     - fcu_region: FCU Region
     - fcu_endpoint: FCU custom endpoint
     - prefix_name: prefix for the tag Name
-** 
+
 - delete_node: it will terminate the instance
     - ak: Access Key
     - sk: Secret Key
