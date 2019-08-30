@@ -10,24 +10,24 @@
 
 # Parameters
 
-* add_node
-** instance_type
-** disk_size
-** job_name
-** ak
-** sk
-** fcu_region
-** fcu_endpoint
-** prefix_name
+- add_node
+    - instance_type
+    - disk_size
+    - job_name
+    - ak
+    - sk
+    - fcu_region
+    - fcu_endpoint
+    - prefix_name
 ** 
-* delete_node
-** ak
-** sk
-** job_name
+- delete_node
+    - ak
+    - sk
+    - job_name
 
 # Jenkins Scripted Pipeline Example
 
-'''
+```groovy
 stage('Run') {
     withCredentials([usernamePassword(credentialsId: 'aws-creds', usernameVariable: "AWS_ACCESS_KEY", passwordVariable: "AWS_SECRET_KEY")]) {
         add_node(job_name: env.JOB_NAME, ak: env.AWS_ACCESS_KEY, sk: env.AWS_SECRET_KEY)
@@ -43,4 +43,4 @@ stage('Delete') {
         delete_node(job_name: env.JOB_NAME, ak: env.AWS_ACCESS_KEY, sk: env.AWS_SECRET_KEY)
     }
 }
-'''
+```
