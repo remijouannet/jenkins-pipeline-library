@@ -1,4 +1,4 @@
-# jenkins-pipeline-libraries
+# jenkins-pipeline-library
 
 # Requirements
 
