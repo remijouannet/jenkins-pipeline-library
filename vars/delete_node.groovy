@@ -13,7 +13,7 @@ def call(body) {
     def fcu_region = body.get('fcu_region', 'eu-west-2').toString()
     def fcu_endpoint = body.get('fcu_endpoint', "fcu.eu-west-2.outscale.com").toString()
 
-    echo "add_node: Authentification"
+    echo "delete_node: Authentification"
 
     AmazonEC2 ec2 = manage.ec2Client(ak, sk, fcu_endpoint, fcu_region)
     
