@@ -23,7 +23,10 @@ def call(body) {
         echo "delete_node: Node already exists -> " + instance
 
         manage.terminateInstance(ec2, instance)
+        echo "delete_node: the instance is now terminate -> " + instance
+
         manage.deleteNode(instance)
+        echo "delete_node: the jenkins node is now delete -> " + instance
     } else {
         echo "delete_node: Node doesn't exist"
     }
