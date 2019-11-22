@@ -71,7 +71,8 @@ def runInstance(AmazonEC2 ec2, String ami, String subnet, String instance_type, 
     BlockDeviceMapping deviceMapping = new BlockDeviceMapping()
             .withDeviceName("/dev/xvdb")
             .withEbs(new EbsBlockDevice()
-                    .withVolumeType("gp2")
+                    .withVolumeType("io1")
+                    .withIops(5000)
                     .withVolumeSize(disk_size)
                     .withDeleteOnTermination(true))
 
