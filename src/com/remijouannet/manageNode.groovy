@@ -72,7 +72,7 @@ def runInstance(AmazonEC2 ec2, String ami, String subnet, String instance_type, 
             .withDeviceName("/dev/xvdb")
             .withEbs(new EbsBlockDevice()
                     .withVolumeType("io1")
-                    .withIops(5000)
+                    .withIops(2000)
                     .withVolumeSize(disk_size)
                     .withDeleteOnTermination(true))
 
