@@ -7,6 +7,7 @@ import com.amazonaws.services.ec2.*
 def call(body) {
     def manage = new com.remijouannet.manageNode()
 
+    def recreate = body.get('recreate', 'no').toString()
     def instance_type = body.get('instance_type', 'm4.large').toString()
     def disk_size = body.get('disk_size', '10').toInteger()
     def job_name = body.get('job_name').toString()
@@ -22,9 +23,19 @@ def call(body) {
 
     def instance= manage.checkIfInstanceExist(ec2, job_name)
 
-    if (instance != null) {
+    if (instance != null && recreate == 'no') {
         echo "add_node: Node already exists -> " + instance
     } else {
+        if (instance != null && recreate == 'yes') {
+            echo "add_node: Node already exists -> " + instance
+            manage.terminateInstance(ec2, instance)
+
+            echo "add_node: the instance is now terminate -> " + instance
+            manage.deleteNode(instance)
+
+            echo "add_node: the jenkins node is now delete -> " + instance
+        }
+
         if (disk_size < 10){
             disk_size = 10
         }
